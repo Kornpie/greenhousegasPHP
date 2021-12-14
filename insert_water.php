@@ -2,7 +2,7 @@
 
 include 'conn.php';
 
-$water_id = $_POST['water_id'];
+// $water_id = $_POST['water_id'];
 $water_cubic = $_POST['water_cubic'];
 $water_cubic_eq = $_POST['water_cubic_eq'];
 $water_month = $_POST['water_month'];
@@ -20,13 +20,13 @@ $water_name = $_POST['water_name'];
 $sql1 =  "'" . $water_month . "' ";
 $sql2 =  "'" . $water_year . "' ";
 $sql3 =  "'" . $water_name . "' ";
-$selectData = $conn->query("SELECT water_id,water_month,water_year FROM tb_use_waters where water_month = $sql1 AND water_year = $sql2  ");
+$selectData = $conn->query("SELECT water_id,water_month,water_year FROM tb_use_waters where water_month = $sql1 AND water_year = $sql2 AND water_name = $sql3 ");
 $result = array();
 
 while ($fetchData = $selectData->fetch_assoc()) {
     $result[] = $fetchData;
 }
-//echo json_encode($result[0]['water_date']) ;
+echo json_encode($result[0]['water_id']) ;
 
 $water_dtoU = json_encode($result[0]['water_month']);
 $water_dtoU1 = json_encode($result[0]['water_year']);
