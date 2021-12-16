@@ -7,6 +7,8 @@ $elec_data = $_GET['elec_data'];
 $lpg_data = $_GET['lpg_data'];
 $ng_data = $_GET['ng_data'];
 $water_data = $_GET['water_data'];
+$water2_data = $_GET['water2_data'];
+$water3_data = $_GET['water3_data'];
 
 
 $dataPoints = array(
@@ -16,7 +18,9 @@ $dataPoints = array(
 	array("label"=> "การใช้ไฟฟ้า", "y"=> $elec_data),
 	array("label"=> "การใช้ LPG", "y"=> $lpg_data),
 	array("label"=> "การใช้ NG", "y"=> $ng_data),
-	array("label"=> "การใช้น้ำประปา", "y"=> $water_data),
+	array("label"=> "การใช้น้ำประปานิคมฯ", "y"=> $water_data),
+	array("label"=> "การใช้น้ำประปาอ่อน", "y"=> $water2_data),
+	array("label"=> "การใช้น้ำRO", "y"=> $water3_data),
 	array("label"=> "มลพิษสิ่งแวดล้อม", "y"=> 0),
 	// array("label"=> "Travel Insurance", "y"=> 126)
 );

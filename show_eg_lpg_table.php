@@ -1,7 +1,6 @@
 <?php 
 
 include 'conn.php';
-
 $lpg_year = $_GET['lpg_year'];
 $mon_Start = $_GET['mon_Start'];
 $mon_End = $_GET['mon_End'];
