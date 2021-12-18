@@ -13,7 +13,7 @@ $raw_eq = $_POST['raw_eq'];
 // $raw_distance = 2555;
 $raw_distance = $_POST['raw_distance'];
 // $raw_distance_eq = $_POST['raw_distance_eq'];
-$raw_total_eq = $_POST['raw_total_eq'];
+//$raw_total_eq = $_POST['raw_total_eq'];
 $raw_month = $_POST['raw_month'];
 $raw_yaer = $_POST['raw_yaer'];
 $raw_day = $_POST['raw_date'];
@@ -33,6 +33,9 @@ echo $careq;
 
 $careqResult = $raw_distance * $careq ;
 echo " ค่าจากการคำนวณ ",$careqResult;
+
+
+$total = $careqResult + $raw_eq ; 
 //ตรวจสอบ
 // $sql1 =  "'" . $raw_month . "' ";
 // $sql2 =  "'" . $raw_yaer . "' ";
@@ -52,10 +55,10 @@ echo " ค่าจากการคำนวณ ",$careqResult;
 // echo  $raw_dtoU;
 // echo  $raw_idtoU;
 
-if ($careqResult) {
+if ($careqResult != null && $total != null) {
     echo "เพิ่มได้";
     $conn->query("INSERT INTO tb_raw_materials (raw_company_origin,raw_name,raw_cars,raw_weight,raw_weight_eq,raw_distance,raw_distance_eq,raw_total_eq,raw_month,raw_yaer,raw_car_codeid,raw_date) 
-    VALUES ('" . $company_id . "','" . $rawname . "','" . $car_id . "','" . $rawweight . "','" . $raw_eq . "','" . $raw_distance . "','" . $careqResult . "','" . $raw_total_eq . "','" . $raw_month . "','" . $raw_yaer . "','" . $raw_car_codeid . "','" . $raw_day . "')");
+    VALUES ('" . $company_id . "','" . $rawname . "','" . $car_id . "','" . $rawweight . "','" . $raw_eq . "','" . $raw_distance . "','" . $careqResult . "','" . $total . "','" . $raw_month . "','" . $raw_yaer . "','" . $raw_car_codeid . "','" . $raw_day . "')");
 }
 // else {
 //     echo "อัปเดตข้อมูล";

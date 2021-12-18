@@ -6,19 +6,22 @@ $mon_end = $_GET['mon_end'];
 $year = $_GET['year'];
 // $comid = $_GET['comid'];
 // $mon_start = 1;
-// $mon_end = 8;
+// $mon_end = 12;
 // $year = 2021;
 
 $sql1 =  "'".$mon_start."'";
 $sql2 =   "'".$mon_end."'";
 // $sql2 =  "10";
 $sql3 =  "'".$year."'";
+// SELECT DISTINCT(tb_waste_recycle.waste_month) ,(tb_month.mon_name),
+// SUM(tb_waste_recycle.waste_total_eq) as sum_total 
+//     FROM tb_waste_recycle,tb_month where tb_waste_recycle.waste_month = tb_month.mon_id AND tb_waste_recycle.waste_month >= $sql1 AND tb_waste_recycle.waste_month <= $sql2 AND tb_waste_recycle.waste_year = $sql3 
+//       GROUP BY tb_waste_recycle.waste_month ASC
 
-
-$queryResult = $conn->query("SELECT DISTINCT(product_month) ,
-SUM(product_total_eq) as sum_total 
-    FROM tb_products where product_month >= $sql1 AND product_month <= $sql2 AND product_year = $sql3 
-     GROUP BY product_month  ");
+$queryResult = $conn->query("SELECT DISTINCT(tb_products.product_month),(tb_month.mon_name),
+SUM(tb_products.product_total_eq) as sum_total 
+    FROM tb_products,tb_month where tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= $sql1 AND tb_products.product_month <= $sql2 AND tb_products.product_year = $sql3 
+     GROUP BY tb_products.product_month  ");
 
 
 $data["data"] = array();
@@ -26,7 +29,7 @@ while ($row = mysqli_fetch_array($queryResult)) {
     array_push(
         $data["data"],
         array(
-            "label" => $row["product_month"],
+            "label" => $row["mon_name"],
             "y" => $row["sum_total"]
         )
     );
@@ -125,7 +128,7 @@ while ($row = mysqli_fetch_array($queryResult)) {
                 animationEnabled: true,
                 theme: "light2",
                 title: {
-                    text: "กราฟข้อมูลสินค้า"
+                    text: "กราฟแสดงผลรวมมูลสินค้า"
                 },
                 axisY: {
                     includeZero: true

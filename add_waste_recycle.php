@@ -11,7 +11,7 @@ $car_id = $_POST['car_id'];
 $waste_eq = $_POST['waste_eq'];
 $waste_distance = $_POST['waste_distance'];
 // $waste_distance_eq = $_POST['waste_distance_eq'];
-$waste_total_eq = $_POST['waste_total_eq'];
+// $waste_total_eq = $_POST['waste_total_eq'];
 $waste_month = $_POST['waste_month'];
 $waste_year = $_POST['waste_year'];
 $waste_day = $_POST['waste_day'];
@@ -32,6 +32,7 @@ echo $careq;
 $careqResult = $waste_distance * $careq ;
 echo " ค่าจากการคำนวณ ",$careqResult;
 
+$total = $careqResult + $waste_eq ; 
 //ตรวจสอบ
 // $sql1 =  "'" . $waste_month . "' ";
 // $sql2 =  "'" . $waste_year . "' ";
@@ -52,10 +53,10 @@ echo " ค่าจากการคำนวณ ",$careqResult;
 // echo  $waste_dtoU;
 // echo  $waste_idtoU;
 
-if ($careqResult) {
+if ($careqResult != null && $total != null) {
     echo "เพิ่มได้";
     $conn->query("INSERT INTO tb_waste_recycle (waste_name, waste_weight, waste_company_destination, waste_cars, waste_eq,  waste_distance, waste_distance_eq, waste_total_eq,waste_day, waste_month, waste_year, waste_car_codeid) 
-                                  VALUES ('".$waste_name."','".$waste_weight."','".$company_id."','".$car_id."','".$waste_eq."','".$waste_distance."','".$careqResult."','".$waste_total_eq."','".$waste_day."','".$waste_month."','".$waste_year."','".$waste_car_codeid."')");
+                                  VALUES ('".$waste_name."','".$waste_weight."','".$company_id."','".$car_id."','".$waste_eq."','".$waste_distance."','".$careqResult."','".$total."','".$waste_day."','".$waste_month."','".$waste_year."','".$waste_car_codeid."')");
 }
 
 // else {

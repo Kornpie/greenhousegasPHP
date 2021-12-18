@@ -11,7 +11,7 @@ $car_id = $_POST['car_id'];
 $product_eq = $_POST['product_eq'];
 $product_distance = $_POST['product_distance'];
 // $product_distance_eq = $_POST['product_distance_eq'];
-$product_total_eq = $_POST['product_total_eq'];
+// $product_total_eq = $_POST['product_total_eq'];
 $product_month = $_POST['product_month'];
 $product_year = $_POST['product_year'];
 $product_day = $_POST['product_day'];
@@ -32,6 +32,7 @@ echo $careq;
 $careqResult = $product_distance * $careq ;
 echo " ค่าจากการคำนวณ ",$careqResult;
 
+$total = $careqResult + $product_eq ; 
 //ตรวจสอบ
 // $sql1 =  "'" . $product_month . "' ";
 // $sql2 =  "'" . $product_year . "' ";
@@ -50,10 +51,10 @@ echo " ค่าจากการคำนวณ ",$careqResult;
 // echo  $raw_dtoU;
 // echo  $product_idtoU;
 
-if ($careqResult) {
+if ($careqResult != null && $total != null) {
     echo "เพิ่มได้";
     $conn->query("INSERT INTO tb_products (product_company_origin,product_name,product_cars,product_weight,product_weight_eq,product_distance,product_distance_eq,product_total_eq,product_month,product_year,product_car_codeid,product_day) 
-    VALUES ('".$company_id."','".$productname."','".$car_id."','".$productweight."','".$product_eq."','".$product_distance."','".$careqResult."','".$product_total_eq."','".$product_month."','".$product_year."','".$product_car_codeid."','".$product_day."')");
+    VALUES ('".$company_id."','".$productname."','".$car_id."','".$productweight."','".$product_eq."','".$product_distance."','".$careqResult."','".$total."','".$product_month."','".$product_year."','".$product_car_codeid."','".$product_day."')");
 }
 // else {
 //     echo "อัปเดตข้อมูล";

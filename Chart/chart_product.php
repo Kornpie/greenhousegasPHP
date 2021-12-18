@@ -1,47 +1,106 @@
 <?php
 include 'conn.php';
 
-	$eg_year = $_GET['year'];
-	$mon_Start = $_GET['mon_start'];
-	$mon_End = $_GET['mon_end'];
-	// $eg_name = $_GET['eg_name'];
+$mon_start = $_GET['mon_start'];
+$mon_end = $_GET['mon_end'];
+$year = $_GET['year'];
+$comid = $_GET['comid'];
+// $mon_start = 1;
+// $mon_end = 12;
+// $year = 2021;
+// $comid = 1;
 
-	$eg_name = "การใช้ NG";
-
-	$sql1 =  "'" . $mon_Start . "' ";
-	$sql2 =  "'" . $mon_End . "' ";
-	$sql3 =  "'" . $eg_year . "' ";
-	$sql4 =  "'" . $eg_name . "' ";
-$queryResult=$conn -> query("SELECT * FROM tb_energy_touse where `eg_month` >= $sql1 AND `eg_month` <= $sql2 AND `eg_year` = $sql3 
-	 AND `eg_name` = $sql4 ORDER BY `eg_month` ASC " );
+$sql1 =  "'".$mon_start."'";
+$sql2 =   "'".$mon_end."'";
+// $sql2 =  "10";
+$sql3 =  "'".$year."'";
+$sql4 =  "'".$comid."'";
+$queryResult = $conn->query("SELECT DISTINCT (tb_products.product_month), SUM(tb_products.product_weight) AS sumweight, tb_month.mon_name 
+FROM tb_products,tb_month
+ WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= 1 AND tb_products.product_month <= 12 AND tb_products.product_year = 2021 AND tb_products.product_company_origin = 1 
+GROUP BY tb_products.product_month ");
 
 $data1["data"] = array();
 while ($row = mysqli_fetch_array($queryResult)) {
     array_push(
         $data1["data"],
         array(
-            "label" => $row["eg_month"],
-            "y" => $row["eg_unit"]
+            "label" => $row["mon_name"],
+            "y" => $row["sumweight"]
         )
     );
 }
 
+$queryResult2 = $conn->query("SELECT DISTINCT (tb_products.product_month),
+SUM(product_weight_eq) as sumweight_eq, tb_month.mon_name 
+FROM tb_products,tb_month
+ WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= 1 AND tb_products.product_month <= 12 AND tb_products.product_year = 2021 AND tb_products.product_company_origin = 1 
+GROUP BY tb_products.product_month ");
 
-$queryResult2=$conn -> query("SELECT `eg_month`, `eg_unit`, `eg_unit_eq`, `eg_name` FROM tb_energy_touse where `eg_month` >= $sql1 AND `eg_month` <= $sql2 AND `eg_year` = $sql3 
-	 AND `eg_name` = $sql4 ORDER BY `eg_month` ASC " );
 
 $data2["data"] = array();
 while ($row = mysqli_fetch_array($queryResult2)) {
     array_push(
         $data2["data"],
         array(
-            "label" => $row["eg_month"],
-            "y" => $row["eg_unit_eq"]
+            "label" => $row["mon_name"],
+            "y" => $row["sumweight_eq"]
         )
     );
 }
 
+$queryResult3 = $conn->query("SELECT DISTINCT (tb_products.product_month),
+SUM(product_distance) as sum_dis, tb_month.mon_name 
+FROM tb_products,tb_month
+ WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= 1 AND tb_products.product_month <= 12 AND tb_products.product_year = 2021 AND tb_products.product_company_origin = 1 
+GROUP BY tb_products.product_month ");
 
+$data3["data"] = array();
+while ($row = mysqli_fetch_array($queryResult3)) {
+    array_push(
+        $data3["data"],
+        array(
+            "label" => $row["mon_name"],
+            "y" => $row["sum_dis"]
+        )
+    );
+}
+
+$queryResult4 = $conn->query("SELECT DISTINCT (tb_products.product_month),
+SUM(product_distance_eq) as sum_diseq, tb_month.mon_name 
+FROM tb_products,tb_month
+ WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= 1 AND tb_products.product_month <= 12 AND tb_products.product_year = 2021 AND tb_products.product_company_origin = 1 
+GROUP BY tb_products.product_month   ");
+
+
+$data4["data"] = array();
+while ($row = mysqli_fetch_array($queryResult4)) {
+    array_push(
+        $data4["data"],
+        array(
+            "label" => $row["mon_name"],
+            "y" => $row["sum_diseq"]
+        )
+    );
+}
+
+$queryResult5 = $conn->query("SELECT DISTINCT (tb_products.product_month),
+SUM(product_total_eq) as sum_total , tb_month.mon_name 
+FROM tb_products,tb_month
+ WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= 1 AND tb_products.product_month <= 12 AND tb_products.product_year = 2021 AND tb_products.product_company_origin = 1 
+GROUP BY tb_products.product_month   ");
+
+
+$data5["data"] = array();
+while ($row = mysqli_fetch_array($queryResult5)) {
+    array_push(
+        $data5["data"],
+        array(
+            "label" => $row["mon_name"],
+            "y" => $row["sum_total"]
+        )
+    );
+}
 // $result = array();
 
 // while ($fetchData = $queryResult->fetch_assoc()) {
@@ -50,7 +109,7 @@ while ($row = mysqli_fetch_array($queryResult2)) {
 // echo json_encode($result);
 
 // while($row = mysqli_fetch_array($queryResult)) {
-// echo $row['eg_month'];
+// echo $row['product_month'];
 // echo $row['sum_diseq']," ffff";
 // }
 
@@ -62,7 +121,7 @@ while ($row = mysqli_fetch_array($queryResult2)) {
 //     array_push($data, array($i) + $row);
 //     echo json_encode($data);
 //     $dataPoints1 = array(
-//         array("label" => $data['eg_month'], "y" =>$data['sumweight']),
+//         array("label" => $data['product_month'], "y" =>$data['sumweight']),
 //         // array("label" => "กุมภาพัน", "y" => 34.87),
 //         // array("label" => "มีนาคม", "y" => 40.30),
 //         // array("label" => "เมษายน", "y" => 35.30),
@@ -150,18 +209,38 @@ while ($row = mysqli_fetch_array($queryResult2)) {
 
                 data: [{
                         type: "column",
-                        name: "ใช้NG",
+                        name: "น้ำหนัก",
                         indexLabel: "{y}",
                         showInLegend: true,
                         dataPoints: <?php echo json_encode($data1["data"], JSON_NUMERIC_CHECK); ?>
                     }, {
                         type: "column",
-                        name: "ใช้NGn EQ",
+                        name: "น้ำหนักEQ",
                         indexLabel: "{y}",
                         showInLegend: true,
                         dataPoints: <?php echo json_encode($data2['data'], JSON_NUMERIC_CHECK); ?>
                     },
-                  
+                    {
+                        type: "column",
+                        name: "ระยะทางEQ",
+                        indexLabel: "{y}",
+                        showInLegend: true,
+                        dataPoints: <?php echo json_encode($data3["data"], JSON_NUMERIC_CHECK); ?>
+                    },
+                    {
+                        type: "column",
+                        name: "ระยะทาง",
+                        indexLabel: "{y}",
+                        showInLegend: true,
+                        dataPoints: <?php echo json_encode($data4["data"], JSON_NUMERIC_CHECK); ?>
+                    },
+                    {
+                        type: "column",
+                        name: "ผลรวม",
+                        indexLabel: "{y}",
+                        showInLegend: true,
+                        dataPoints: <?php echo json_encode($data5["data"], JSON_NUMERIC_CHECK); ?>
+                    }
                 ]
             });
             chart.render();

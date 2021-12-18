@@ -5,90 +5,149 @@ $mon_start = $_GET['mon_start'];
 $mon_end = $_GET['mon_end'];
 $year = $_GET['year'];
 $comid = $_GET['comid'];
+// $mon_start = 1;
+// $mon_end = 8;
+// $year = 2021;
+// $comid = 1;
 
 $sql1 =  "'".$mon_start."'";
 $sql2 =   "'".$mon_end."'";
 // $sql2 =  "10";
 $sql3 =  "'".$year."'";
 $sql4 =  "'".$comid."'";
-$queryResult = $conn->query("SELECT DISTINCT(`raw_month`) ,
-SUM(`raw_weight`) as sumweight ,SUM(`raw_weight_eq`) as sumweight_eq ,SUM(`raw_distance`) as sum_dis  ,
-	SUM(`raw_distance_eq`) as sum_diseq  ,SUM(`raw_total_eq`) as sum_total 
-	FROM `tb_raw_materials` where `raw_month` >= $sql1 AND `raw_month` <= $sql2 AND `raw_yaer` = $sql3 
-	 AND `raw_company_origin` = $sql4  GROUP BY `raw_month` ORDER BY raw_month ASC");
+$queryResult = $conn->query("SELECT DISTINCT
+(tb_raw_materials.raw_month),
+SUM(tb_raw_materials.raw_weight) AS sumweight,
+SUM(tb_raw_materials.raw_weight_eq) AS sumweight_eq,
+SUM(tb_raw_materials.raw_distance) AS sum_dis,
+SUM(tb_raw_materials.raw_distance_eq) AS sum_diseq,
+SUM(tb_raw_materials.raw_total_eq) AS sum_total,
+tb_month.mon_name
+FROM
+tb_raw_materials,tb_month
+WHERE
+tb_raw_materials.raw_month =  tb_month.mon_id AND tb_raw_materials.raw_month >= $sql1 AND tb_raw_materials.raw_month <= $sql2 AND tb_raw_materials.raw_yaer = $sql3 AND tb_raw_materials.raw_company_origin = $sql4
+GROUP BY
+tb_raw_materials.raw_month
+ORDER BY
+tb_raw_materials.raw_month ASC");
 $data1["data"] = array();
 while ($row = mysqli_fetch_array($queryResult)) {
     array_push(
         $data1["data"],
         array(
-            "label" => $row["raw_month"],
+            "label" => $row["mon_name"],
             "y" => $row["sumweight"]
         )
     );
 }
 
-$queryResult2 = $conn->query("SELECT DISTINCT(`raw_month`) ,
-SUM(`raw_weight`) as sumweight ,SUM(`raw_weight_eq`) as sumweight_eq ,SUM(`raw_distance`) as sum_dis  ,
-	SUM(`raw_distance_eq`) as sum_diseq  ,SUM(`raw_total_eq`) as sum_total 
-	FROM `tb_raw_materials` where `raw_month` >= $sql1 AND `raw_month` <= $sql2 AND `raw_yaer` = $sql3 
-	 AND `raw_company_origin` = $sql4  GROUP BY `raw_month` ORDER BY raw_month ASC");
+$queryResult2 = $conn->query("SELECT DISTINCT
+(tb_raw_materials.raw_month),
+SUM(tb_raw_materials.raw_weight) AS sumweight,
+SUM(tb_raw_materials.raw_weight_eq) AS sumweight_eq,
+SUM(tb_raw_materials.raw_distance) AS sum_dis,
+SUM(tb_raw_materials.raw_distance_eq) AS sum_diseq,
+SUM(tb_raw_materials.raw_total_eq) AS sum_total,
+tb_month.mon_name
+FROM
+tb_raw_materials,tb_month
+WHERE
+tb_raw_materials.raw_month =  tb_month.mon_id AND tb_raw_materials.raw_month >= $sql1 AND tb_raw_materials.raw_month <= $sql2 AND tb_raw_materials.raw_yaer = $sql3 AND tb_raw_materials.raw_company_origin = $sql4
+GROUP BY
+tb_raw_materials.raw_month
+ORDER BY
+tb_raw_materials.raw_month ASC");
 
 $data2["data"] = array();
 while ($row = mysqli_fetch_array($queryResult2)) {
     array_push(
         $data2["data"],
         array(
-            "label" => $row["raw_month"],
+            "label" => $row["mon_name"],
             "y" => $row["sumweight_eq"]
         )
     );
 }
 
-$queryResult3 = $conn->query("SELECT DISTINCT(`raw_month`) ,
-SUM(`raw_weight`) as sumweight ,SUM(`raw_weight_eq`) as sumweight_eq ,SUM(`raw_distance`) as sum_dis  ,
-	SUM(`raw_distance_eq`) as sum_diseq  ,SUM(`raw_total_eq`) as sum_total 
-	FROM `tb_raw_materials` where `raw_month` >= $sql1 AND `raw_month` <= $sql2 AND `raw_yaer` = $sql3 
-	 AND `raw_company_origin` = $sql4  GROUP BY `raw_month` ORDER BY raw_month ASC");
+$queryResult3 = $conn->query("SELECT DISTINCT
+(tb_raw_materials.raw_month),
+SUM(tb_raw_materials.raw_weight) AS sumweight,
+SUM(tb_raw_materials.raw_weight_eq) AS sumweight_eq,
+SUM(tb_raw_materials.raw_distance) AS sum_dis,
+SUM(tb_raw_materials.raw_distance_eq) AS sum_diseq,
+SUM(tb_raw_materials.raw_total_eq) AS sum_total,
+tb_month.mon_name
+FROM
+tb_raw_materials,tb_month
+WHERE
+tb_raw_materials.raw_month =  tb_month.mon_id AND tb_raw_materials.raw_month >= $sql1 AND tb_raw_materials.raw_month <= $sql2 AND tb_raw_materials.raw_yaer = $sql3 AND tb_raw_materials.raw_company_origin = $sql4
+GROUP BY
+tb_raw_materials.raw_month
+ORDER BY
+tb_raw_materials.raw_month ASC");
 
 $data3["data"] = array();
 while ($row = mysqli_fetch_array($queryResult3)) {
     array_push(
         $data3["data"],
         array(
-            "label" => $row["raw_month"],
+            "label" => $row["mon_name"],
             "y" => $row["sum_dis"]
         )
     );
 }
 
-$queryResult4 = $conn->query("SELECT DISTINCT(`raw_month`) ,
-SUM(`raw_weight`) as sumweight ,SUM(`raw_weight_eq`) as sumweight_eq ,SUM(`raw_distance`) as sum_dis  ,
-	SUM(`raw_distance_eq`) as sum_diseq  ,SUM(`raw_total_eq`) as sum_total 
-	FROM `tb_raw_materials` where `raw_month` >= $sql1 AND `raw_month` <= $sql2 AND `raw_yaer` = $sql3 
-	 AND `raw_company_origin` = $sql4  GROUP BY `raw_month` ORDER BY raw_month ASC");
+$queryResult4 = $conn->query("SELECT DISTINCT
+(tb_raw_materials.raw_month),
+SUM(tb_raw_materials.raw_weight) AS sumweight,
+SUM(tb_raw_materials.raw_weight_eq) AS sumweight_eq,
+SUM(tb_raw_materials.raw_distance) AS sum_dis,
+SUM(tb_raw_materials.raw_distance_eq) AS sum_diseq,
+SUM(tb_raw_materials.raw_total_eq) AS sum_total,
+tb_month.mon_name
+FROM
+tb_raw_materials,tb_month
+WHERE
+tb_raw_materials.raw_month =  tb_month.mon_id AND tb_raw_materials.raw_month >= $sql1 AND tb_raw_materials.raw_month <= $sql2 AND tb_raw_materials.raw_yaer = $sql3 AND tb_raw_materials.raw_company_origin = $sql4
+GROUP BY
+tb_raw_materials.raw_month
+ORDER BY
+tb_raw_materials.raw_month ASC");
 
 $data4["data"] = array();
 while ($row = mysqli_fetch_array($queryResult4)) {
     array_push(
         $data4["data"],
         array(
-            "label" => $row["raw_month"],
+            "label" => $row["mon_name"],
             "y" => $row["sum_diseq"]
         )
     );
 }
-$queryResult5 = $conn->query("SELECT DISTINCT(`raw_month`) ,
-SUM(`raw_weight`) as sumweight ,SUM(`raw_weight_eq`) as sumweight_eq ,SUM(`raw_distance`) as sum_dis  ,
-	SUM(`raw_distance_eq`) as sum_diseq  ,SUM(`raw_total_eq`) as sum_total 
-	FROM `tb_raw_materials` where `raw_month` >= $sql1 AND `raw_month` <= $sql2 AND `raw_yaer` = $sql3 
-	 AND `raw_company_origin` = $sql4  GROUP BY `raw_month` ORDER BY raw_month ASC");
+$queryResult5 = $conn->query("SELECT DISTINCT
+(tb_raw_materials.raw_month),
+SUM(tb_raw_materials.raw_weight) AS sumweight,
+SUM(tb_raw_materials.raw_weight_eq) AS sumweight_eq,
+SUM(tb_raw_materials.raw_distance) AS sum_dis,
+SUM(tb_raw_materials.raw_distance_eq) AS sum_diseq,
+SUM(tb_raw_materials.raw_total_eq) AS sum_total,
+tb_month.mon_name
+FROM
+tb_raw_materials,tb_month
+WHERE
+tb_raw_materials.raw_month =  tb_month.mon_id AND tb_raw_materials.raw_month >= $sql1 AND tb_raw_materials.raw_month <= $sql2 AND tb_raw_materials.raw_yaer = $sql3 AND tb_raw_materials.raw_company_origin = $sql4
+GROUP BY
+tb_raw_materials.raw_month
+ORDER BY
+tb_raw_materials.raw_month ASC");
 
 $data5["data"] = array();
 while ($row = mysqli_fetch_array($queryResult5)) {
     array_push(
         $data5["data"],
         array(
-            "label" => $row["raw_month"],
+            "label" => $row["mon_name"],
             "y" => $row["sum_total"]
         )
     );

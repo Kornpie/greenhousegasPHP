@@ -6,7 +6,7 @@ $mon_end = $_GET['mon_end'];
 $year = $_GET['year'];
 
 // $mon_start = 1;
-// $mon_end = 8;
+// $mon_end = 12;
 // $year = 2021;
 // $comid = 1;
 
@@ -14,19 +14,24 @@ $sql1 =  "'".$mon_start."'";
 $sql2 =   "'".$mon_end."'";
 // $sql2 =  "10";
 $sql3 =  "'".$year."'";
+// SELECT DISTINCT raw_month,mon_name FROM tb_raw_materials join tb_month on tb_raw_materials.raw_month = tb_month.mon_id
 
-
-$queryResult5 = $conn->query("SELECT DISTINCT(`raw_month`) ,
-SUM(`raw_total_eq`) as sum_total 
-	FROM `tb_raw_materials` where `raw_month` >= $sql1 AND `raw_month` <= $sql2 AND `raw_yaer` = $sql3 
-	 GROUP BY `raw_month` ORDER BY raw_month ASC");
+$queryResult5 = $conn->query("SELECT DISTINCT
+(tb_raw_materials.raw_month),(tb_month.mon_name),
+SUM(tb_raw_materials.raw_total_eq) AS sum_total
+FROM
+tb_raw_materials ,tb_month
+WHERE
+tb_raw_materials.raw_month = tb_month.mon_id AND
+tb_raw_materials.raw_month >= $sql1 AND tb_raw_materials.raw_month <= $sql2 AND tb_raw_materials.raw_yaer = $sql3
+GROUP BY tb_raw_materials.raw_month ORDER BY tb_raw_materials.raw_month ASC");
 
 $data5["data"] = array();
 while ($row = mysqli_fetch_array($queryResult5)) {
     array_push(
         $data5["data"],
         array(
-            "label" => $row["raw_month"],
+            "label" => $row["mon_name"],
             "y" => $row["sum_total"]
         )
     );
@@ -140,7 +145,7 @@ while ($row = mysqli_fetch_array($queryResult5)) {
                 data: [
                     {
                         type: "column",
-                        name: "ผลรวม",
+                       
                         indexLabel: "{y}",
                         showInLegend: false,
                         dataPoints: <?php echo json_encode($data5["data"], JSON_NUMERIC_CHECK); ?>

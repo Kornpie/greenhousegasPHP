@@ -1,32 +1,43 @@
 <?php
 include 'conn.php';
 
-// $mon_start = $_GET['mon_start'];
-// $mon_end = $_GET['mon_end'];
-// $year = $_GET['year'];
+$mon_start = $_GET['mon_start'];
+$mon_end = $_GET['mon_end'];
+$year = $_GET['year'];
 // $comid = $_GET['comid'];
-$mon_start = 1;
-$mon_end = 8;
-$year = 2021;
+// $mon_start = 1;
+// $mon_end = 8;
+// $year = 2021;
 
 
 $sql1 =  "'".$mon_start."'";
 $sql2 =   "'".$mon_end."'";
 // $sql2 =  "10";
 $sql3 =  "'".$year."'";
+// SELECT DISTINCT
+// (tb_raw_materials.raw_month),(tb_month.mon_name),
+// SUM(tb_raw_materials.raw_total_eq) AS sum_total
+// FROM
+// tb_raw_materials ,tb_month
+// WHERE
+// tb_raw_materials.raw_month = tb_month.mon_id AND
+// tb_raw_materials.raw_month >= $sql1 AND tb_raw_materials.raw_month <= $sql2 AND tb_raw_materials.raw_yaer = $sql3
+// GROUP BY
+// tb_raw_materials.raw_month
+// ORDER BY
+// tb_raw_materials.raw_month ASC
 
-
-$queryResult5 = $conn->query("SELECT DISTINCT(waste_month) ,
-SUM(waste_total_eq) as sum_total 
-    FROM tb_waste_recycle where waste_month >= $sql1 AND waste_month <= $sql2 AND waste_year = $sql3 
-      GROUP BY waste_month  ");
+$queryResult5 = $conn->query("SELECT DISTINCT(tb_waste_recycle.waste_month) ,(tb_month.mon_name),
+SUM(tb_waste_recycle.waste_total_eq) as sum_total 
+    FROM tb_waste_recycle,tb_month where tb_waste_recycle.waste_month = tb_month.mon_id AND tb_waste_recycle.waste_month >= $sql1 AND tb_waste_recycle.waste_month <= $sql2 AND tb_waste_recycle.waste_year = $sql3 
+      GROUP BY tb_waste_recycle.waste_month ASC ");
 
 $data5["data"] = array();
 while ($row = mysqli_fetch_array($queryResult5)) {
     array_push(
         $data5["data"],
         array(
-            "label" => $row["waste_month"],
+            "label" => $row["mon_name"],
             "y" => $row["sum_total"]
         )
     );
