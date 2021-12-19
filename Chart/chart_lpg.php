@@ -4,32 +4,24 @@ include 'conn.php';
 $lpg_year = $_GET['year'];
 $mon_Start = $_GET['mon_start'];
 $mon_End = $_GET['mon_end'];
-// $lpg_name = $_GET['lpg_name'];
+$comid = $_GET['comid'];
+// $eg_name = $_GET['eg_name'];
 
 // $lpg_year = 2021;
 // $mon_Start = 1;
 // $mon_End = 12;
+// $comid = 1;
 
-$lpg_name = "การใช้LPG";
 
 $sql1 =  "'" . $mon_Start . "' ";
 $sql2 =  "'" . $mon_End . "' ";
 $sql3 =  "'" . $lpg_year . "' ";
-$sql4 =  "'" . $lpg_name . "' ";
-$queryResult=$conn -> query("SELECT
-tb_use_lpg.lpg_month,
-tb_use_lpg.lpg_weight,
-tb_use_lpg.lpg_weight_eq,
-tb_use_lpg.lpg_distance,
-tb_use_lpg.lpg_distance_eq,
-tb_use_lpg.lpg_total_eq,
-tb_month.mon_name
-FROM
-tb_use_lpg,tb_month
-WHERE
- tb_use_lpg.lpg_month = tb_month.mon_id AND tb_use_lpg.lpg_month >= $sql1 AND tb_use_lpg.lpg_month <= $sql2 AND tb_use_lpg.lpg_year = $sql3
-ORDER BY
-tb_use_lpg.lpg_month ASC " );
+
+$sql4 =  "'" . $comid . "'";
+$queryResult = $conn->query("SELECT tb_use_lpg.lpg_month, tb_use_lpg.lpg_weight, tb_use_lpg.lpg_weight_eq, tb_use_lpg.lpg_distance, tb_use_lpg.lpg_distance_eq, tb_use_lpg.lpg_total_eq, tb_month.mon_name, tb_use_lpg.lpg_company_origin 
+FROM tb_use_lpg,tb_month 
+WHERE tb_use_lpg.lpg_month = tb_month.mon_id AND tb_use_lpg.lpg_month >= $sql1 AND tb_use_lpg.lpg_month <= $sql2 AND tb_use_lpg.lpg_year = $sql3 AND tb_use_lpg.lpg_company_origin = $sql4
+ORDER BY tb_use_lpg.lpg_month ASC");
 
 $data1["data"] = array();
 while ($row = mysqli_fetch_array($queryResult)) {
@@ -43,20 +35,10 @@ while ($row = mysqli_fetch_array($queryResult)) {
 }
 
 
-$queryResult2=$conn -> query("SELECT
-tb_use_lpg.lpg_month,
-tb_use_lpg.lpg_weight,
-tb_use_lpg.lpg_weight_eq,
-tb_use_lpg.lpg_distance,
-tb_use_lpg.lpg_distance_eq,
-tb_use_lpg.lpg_total_eq,
-tb_month.mon_name
-FROM
-tb_use_lpg,tb_month
-WHERE
- tb_use_lpg.lpg_month = tb_month.mon_id AND tb_use_lpg.lpg_month >= $sql1 AND tb_use_lpg.lpg_month <= $sql2 AND tb_use_lpg.lpg_year = $sql3
-ORDER BY
-tb_use_lpg.lpg_month ASC " );
+$queryResult2 = $conn->query("SELECT tb_use_lpg.lpg_month, tb_use_lpg.lpg_weight, tb_use_lpg.lpg_weight_eq, tb_use_lpg.lpg_distance, tb_use_lpg.lpg_distance_eq, tb_use_lpg.lpg_total_eq, tb_month.mon_name, tb_use_lpg.lpg_company_origin 
+FROM tb_use_lpg,tb_month 
+WHERE tb_use_lpg.lpg_month = tb_month.mon_id AND tb_use_lpg.lpg_month >= $sql1 AND tb_use_lpg.lpg_month <= $sql2 AND tb_use_lpg.lpg_year = $sql3 AND tb_use_lpg.lpg_company_origin = $sql4
+ORDER BY tb_use_lpg.lpg_month ASC ");
 
 $data2["data"] = array();
 while ($row = mysqli_fetch_array($queryResult2)) {
@@ -68,20 +50,10 @@ while ($row = mysqli_fetch_array($queryResult2)) {
         )
     );
 }
-$queryResult3=$conn -> query("SELECT
-tb_use_lpg.lpg_month,
-tb_use_lpg.lpg_weight,
-tb_use_lpg.lpg_weight_eq,
-tb_use_lpg.lpg_distance,
-tb_use_lpg.lpg_distance_eq,
-tb_use_lpg.lpg_total_eq,
-tb_month.mon_name
-FROM
-tb_use_lpg,tb_month
-WHERE
- tb_use_lpg.lpg_month = tb_month.mon_id AND tb_use_lpg.lpg_month >= $sql1 AND tb_use_lpg.lpg_month <= $sql2 AND tb_use_lpg.lpg_year = $sql3
-ORDER BY
-tb_use_lpg.lpg_month ASC  " );
+$queryResult3 = $conn->query("SELECT tb_use_lpg.lpg_month, tb_use_lpg.lpg_weight, tb_use_lpg.lpg_weight_eq, tb_use_lpg.lpg_distance, tb_use_lpg.lpg_distance_eq, tb_use_lpg.lpg_total_eq, tb_month.mon_name, tb_use_lpg.lpg_company_origin 
+FROM tb_use_lpg,tb_month 
+WHERE tb_use_lpg.lpg_month = tb_month.mon_id AND tb_use_lpg.lpg_month >= $sql1 AND tb_use_lpg.lpg_month <= $sql2 AND tb_use_lpg.lpg_year = $sql3 AND tb_use_lpg.lpg_company_origin = $sql4
+ORDER BY tb_use_lpg.lpg_month ASC  ");
 
 $data3["data"] = array();
 while ($row = mysqli_fetch_array($queryResult3)) {
@@ -94,20 +66,10 @@ while ($row = mysqli_fetch_array($queryResult3)) {
     );
 }
 
-$queryResult4=$conn -> query("SELECT
-tb_use_lpg.lpg_month,
-tb_use_lpg.lpg_weight,
-tb_use_lpg.lpg_weight_eq,
-tb_use_lpg.lpg_distance,
-tb_use_lpg.lpg_distance_eq,
-tb_use_lpg.lpg_total_eq,
-tb_month.mon_name
-FROM
-tb_use_lpg,tb_month
-WHERE
- tb_use_lpg.lpg_month = tb_month.mon_id AND tb_use_lpg.lpg_month >= $sql1 AND tb_use_lpg.lpg_month <= $sql2 AND tb_use_lpg.lpg_year = $sql3
-ORDER BY
-tb_use_lpg.lpg_month ASC " );
+$queryResult4 = $conn->query("SELECT tb_use_lpg.lpg_month, tb_use_lpg.lpg_weight, tb_use_lpg.lpg_weight_eq, tb_use_lpg.lpg_distance, tb_use_lpg.lpg_distance_eq, tb_use_lpg.lpg_total_eq, tb_month.mon_name, tb_use_lpg.lpg_company_origin 
+FROM tb_use_lpg,tb_month 
+WHERE tb_use_lpg.lpg_month = tb_month.mon_id AND tb_use_lpg.lpg_month >= $sql1 AND tb_use_lpg.lpg_month <= $sql2 AND tb_use_lpg.lpg_year = $sql3 AND tb_use_lpg.lpg_company_origin = $sql4
+ORDER BY tb_use_lpg.lpg_month ASC");
 
 $data4["data"] = array();
 while ($row = mysqli_fetch_array($queryResult4)) {
@@ -119,20 +81,10 @@ while ($row = mysqli_fetch_array($queryResult4)) {
         )
     );
 }
-$queryResult5=$conn -> query("SELECT
-tb_use_lpg.lpg_month,
-tb_use_lpg.lpg_weight,
-tb_use_lpg.lpg_weight_eq,
-tb_use_lpg.lpg_distance,
-tb_use_lpg.lpg_distance_eq,
-tb_use_lpg.lpg_total_eq,
-tb_month.mon_name
-FROM
-tb_use_lpg,tb_month
-WHERE
- tb_use_lpg.lpg_month = tb_month.mon_id AND tb_use_lpg.lpg_month >= $sql1 AND tb_use_lpg.lpg_month <= $sql2 AND tb_use_lpg.lpg_year = $sql3
-ORDER BY
-tb_use_lpg.lpg_month ASC  " );
+$queryResult5 = $conn->query("SELECT tb_use_lpg.lpg_month, tb_use_lpg.lpg_weight, tb_use_lpg.lpg_weight_eq, tb_use_lpg.lpg_distance, tb_use_lpg.lpg_distance_eq, tb_use_lpg.lpg_total_eq, tb_month.mon_name, tb_use_lpg.lpg_company_origin 
+FROM tb_use_lpg,tb_month 
+WHERE tb_use_lpg.lpg_month = tb_month.mon_id AND tb_use_lpg.lpg_month >= $sql1 AND tb_use_lpg.lpg_month <= $sql2 AND tb_use_lpg.lpg_year = $sql3 AND tb_use_lpg.lpg_company_origin = $sql4
+ORDER BY tb_use_lpg.lpg_month ASC  ");
 
 $data5["data"] = array();
 while ($row = mysqli_fetch_array($queryResult5)) {
