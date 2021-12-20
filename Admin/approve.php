@@ -31,6 +31,9 @@ session_start();
     
 <?php include "navbar.php" ?>
     <br><br>
+    <center>
+        <h4>รายชื่อบริษัท</h4>
+    </center>
     <?php if (isset($_SESSION['admin_user'])) { ?>
 
         <?php

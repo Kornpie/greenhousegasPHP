@@ -22,10 +22,10 @@ session_start();
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;1,100&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,100;0,200;1,100&display=swap" rel="stylesheet">
     <style>
-        body{
+        body {
             font-family: 'Prompt', sans-serif;
         }
     </style>
@@ -34,6 +34,9 @@ session_start();
 <body>
     <?php include "navbar.php" ?>
     <br><br>
+    <center>
+        <h4>ค่า Emision Factor</h4>
+    </center>
     <?php if (isset($_SESSION['admin_user'])) { ?>
 
         <?php
@@ -56,9 +59,9 @@ session_start();
                             <?php while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
                                 <tr>
                                     <th scope="row"><?php echo $result['factor_id']; ?></th>
-                                    <th  scope="row"><?php echo $result['factor_fullname']; ?></th>
-                                    <th  scope="row"><?php echo $result['factor_value']; ?></th>
-                                    <th  scope="row"><a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#id_id<?php echo $result['factor_id']; ?>">
+                                    <th scope="row"><?php echo $result['factor_fullname']; ?></th>
+                                    <th scope="row"><?php echo $result['factor_value']; ?></th>
+                                    <th scope="row"><a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#id_id<?php echo $result['factor_id']; ?>">
                                             แก้ไขค่า
                                         </a></th>
                                 </tr>
@@ -68,7 +71,7 @@ session_start();
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">เปลี่ยนสถานะ</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">แก้ไขค่า Emision Factor</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
 

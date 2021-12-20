@@ -6,19 +6,18 @@ $mon_end = $_GET['mon_end'];
 $year = $_GET['year'];
 $comid = $_GET['comid'];
 // $mon_start = 1;
-// $mon_end = 12;
+// $mon_end = 4;
 // $year = 2021;
-// $comid = 1;
+// $comid = 7;
 
 $sql1 =  "'".$mon_start."'";
 $sql2 =   "'".$mon_end."'";
 // $sql2 =  "10";
 $sql3 =  "'".$year."'";
 $sql4 =  "'".$comid."'";
-$queryResult = $conn->query("SELECT DISTINCT (tb_products.product_month), SUM(tb_products.product_weight) AS sumweight, tb_month.mon_name 
-FROM tb_products,tb_month
- WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= 1 AND tb_products.product_month <= 12 AND tb_products.product_year = 2021 AND tb_products.product_company_origin = 1 
-GROUP BY tb_products.product_month ");
+$queryResult = $conn->query("SELECT DISTINCT tb_products.product_month, SUM(tb_products.product_weight) AS sumweight, tb_month.mon_name 
+FROM tb_products,tb_month WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= $sql1 AND tb_products.product_month <= $sql2 AND tb_products.product_year = $sql3 AND tb_products.product_company_origin =$sql4 
+GROUP BY tb_products.product_month ORDER BY tb_products.product_month ASC; ");
 
 $data1["data"] = array();
 while ($row = mysqli_fetch_array($queryResult)) {
@@ -31,11 +30,9 @@ while ($row = mysqli_fetch_array($queryResult)) {
     );
 }
 
-$queryResult2 = $conn->query("SELECT DISTINCT (tb_products.product_month),
-SUM(product_weight_eq) as sumweight_eq, tb_month.mon_name 
-FROM tb_products,tb_month
- WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= 1 AND tb_products.product_month <= 12 AND tb_products.product_year = 2021 AND tb_products.product_company_origin = 1 
-GROUP BY tb_products.product_month ");
+$queryResult2 = $conn->query("SELECT DISTINCT tb_products.product_month, SUM(product_weight_eq) AS sumweight_eq, tb_month.mon_name 
+FROM tb_products,tb_month WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= $sql1 AND tb_products.product_month <= $sql2 AND tb_products.product_year = $sql3 AND tb_products.product_company_origin =$sql4 
+GROUP BY tb_products.product_month ORDER BY tb_products.product_month ASC; ");
 
 
 $data2["data"] = array();
@@ -49,11 +46,9 @@ while ($row = mysqli_fetch_array($queryResult2)) {
     );
 }
 
-$queryResult3 = $conn->query("SELECT DISTINCT (tb_products.product_month),
-SUM(product_distance) as sum_dis, tb_month.mon_name 
-FROM tb_products,tb_month
- WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= 1 AND tb_products.product_month <= 12 AND tb_products.product_year = 2021 AND tb_products.product_company_origin = 1 
-GROUP BY tb_products.product_month ");
+$queryResult3 = $conn->query("SELECT DISTINCT tb_products.product_month, SUM(product_distance) AS sum_dis, tb_month.mon_name 
+FROM tb_products,tb_month WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= $sql1 AND tb_products.product_month <= $sql2 AND tb_products.product_year = $sql3 AND tb_products.product_company_origin =$sql4 
+GROUP BY tb_products.product_month ORDER BY tb_products.product_month ASC; ");
 
 $data3["data"] = array();
 while ($row = mysqli_fetch_array($queryResult3)) {
@@ -66,11 +61,9 @@ while ($row = mysqli_fetch_array($queryResult3)) {
     );
 }
 
-$queryResult4 = $conn->query("SELECT DISTINCT (tb_products.product_month),
-SUM(product_distance_eq) as sum_diseq, tb_month.mon_name 
-FROM tb_products,tb_month
- WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= 1 AND tb_products.product_month <= 12 AND tb_products.product_year = 2021 AND tb_products.product_company_origin = 1 
-GROUP BY tb_products.product_month   ");
+$queryResult4 = $conn->query("SELECT DISTINCT tb_products.product_month,SUM(product_distance_eq) AS sum_diseq, tb_month.mon_name 
+FROM tb_products,tb_month WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= $sql1 AND tb_products.product_month <= $sql2 AND tb_products.product_year = $sql3 AND tb_products.product_company_origin =$sql4 
+GROUP BY tb_products.product_month ORDER BY tb_products.product_month ASC; ");
 
 
 $data4["data"] = array();
@@ -84,11 +77,9 @@ while ($row = mysqli_fetch_array($queryResult4)) {
     );
 }
 
-$queryResult5 = $conn->query("SELECT DISTINCT (tb_products.product_month),
-SUM(product_total_eq) as sum_total , tb_month.mon_name 
-FROM tb_products,tb_month
- WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= 1 AND tb_products.product_month <= 12 AND tb_products.product_year = 2021 AND tb_products.product_company_origin = 1 
-GROUP BY tb_products.product_month   ");
+$queryResult5 = $conn->query("SELECT DISTINCT tb_products.product_month,SUM(product_total_eq) AS sum_total, tb_month.mon_name 
+FROM tb_products,tb_month WHERE tb_products.product_month = tb_month.mon_id AND tb_products.product_month >= $sql1 AND tb_products.product_month <= $sql2 AND tb_products.product_year = $sql3 AND tb_products.product_company_origin =$sql4 
+GROUP BY tb_products.product_month ORDER BY tb_products.product_month ASC;  ");
 
 
 $data5["data"] = array();

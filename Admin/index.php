@@ -33,6 +33,7 @@ session_start();
 <body>
     <?php include "navbar.php" ?>
     <br><br>
+    <center><h4>รายชื่อผู้ใช้</h4></center>
     <?php if (isset($_SESSION['admin_user'])) { ?>
         <?php
         include('conn.php');

@@ -45,7 +45,7 @@ while ($row = mysqli_fetch_array($queryResult2)) {
                 animationEnabled: true,
                 theme: "light2",
                 title: {
-                    text: "กราฟแสดงข้อมูลการใช้พลังงานประจำเดือน"
+                    text: "กราฟแสดงข้อมูลการใช้ไฟฟ้าประจำเดือน"
                 },
                 axisY: {
                     includeZero: true
